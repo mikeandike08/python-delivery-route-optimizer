@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="title">
+	<h1>Delivery Route Optimization App</h1>
+	<p><b>Made by Michael Lapinski</b></p>
+</div>
+<form action="/submit" method="post">
+	<div class="form-group">
+		<label for="textarea" ><b>Input your addresses<b></label><br><br>
+		<textarea placeholder="Seperate with Commas" style="resize: none;" rows="5" cols="50" id='textarea'name="input_form"></textarea><br><br>
+	</div>
+	<button type="submit">Submit</button><br><br>
+</form>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+body{
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 10px;
+    background-color: #CF9893;
+    border-radius: 10px;
+    width: 70%;
+    height: 100%;
+    text-align:center;
+    padding: 10px;
+}
+
+p {
+    font-size: 25px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 40px;
+    min-height: 8%;
+    max-height: 15%;
+}
+
+ol{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    list-style-position: inside;
+    height: 100%;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.instruction {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    background-color: rgba(1,22,39,0.5);
+    border-radius: 15px;
+    height: 30%;
+    width: 90%;
+}
+
+li{
+    margin-bottom: 15px;
+    font-size: 18px;
+}

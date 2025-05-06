@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='routeStyle.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="title">
+	<h1>Your submitted list of address</h1>
+	<p><b>Make sure everything is correct.</b></p>
+</div>
+
+<div class="confirmation">
+	<div class="container">
+		<h2><b>Addresses</b></h2>
+		<div class="addressList">
+			<ul>
+				{% for address in addresses %}
+					<li>{{ address }}</li>
+				{% endfor %}
+			</ul>
+			<div class="correction">
+				<form method="get">
+					<label class="titleLabel"><b>Is this correct?</b></label>
+					<button type="submit" formaction="/calculate">Calculate Route</button>
+					<button type="submit" formaction="/">Reimport Address</button>
+					<label class="tspToggle">
+						<input type="checkbox" name="use-tsp" value="on" >Return To First Address?
+					</label>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}

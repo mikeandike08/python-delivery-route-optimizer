@@ -1,0 +1,50 @@
+form{
+	margin: auto;
+	text-align: center;
+	padding: 20px;
+	width: 100%;
+	background-color: rgba(1,22,39,0.5);
+	border-radius: 20px;
+}
+
+.form-group {
+	margin-bottom: 20px;
+}
+
+form label {
+	margin: auto;
+	font-size: 20px;
+	display: block;
+	background-color: #011627;
+	padding: 8px;
+	border-radius: 5px;
+	margin-bottom: 8px;
+	min-width: 55%;
+	max-width: 60%;
+}
+
+form button {
+	min-width: 20%;
+	max-width: 50%;
+	height: 30px;
+	border-radius: 5px;
+	background-color: #EDF0DA;
+	border-style: none;
+}
+
+form button:hover{
+	background-color: rgba(237, 250, 218, 0.8);
+}
+
+textarea {
+	text-align: center;
+	border-radius: 10px;
+	font-size: 20px;
+	margin-bottom: 15px;
+	min-width: 10%;
+	max-width: 75%;
+}
+		
+form input, form textarea, form button {
+	margin-bottom: 15px;
+}

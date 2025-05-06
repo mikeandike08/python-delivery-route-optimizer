@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='howto.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1> Wondering how to use this program?? </h1><br />
+</div>
+<p><b>Pretty simple!</b></p><br/>
+
+<div class="instruction">
+    <ol>
+        <li>First, make sure to have to have the necessary requirements, check the github for info</li>
+        <li>If you want a quick and easy experience, import a csv of your addresses and you can get going!</li>
+        <li>Don't worry! If not, you can simply type your addresses in the box, only use commas to seperate addresses</li>
+        <li><b>VERY IMPORTANT</b> make sure to include the city name in the address ex: 123 john doe city, <b>NO commas</b></li>
+        <li>Once you submit and everything is okay you can calculate the route, either by default(will not loop back) or use the checkbox for looping(utilizes TSP)</li>
+
+    </ol>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='maps.css') }}">
+<script src="https://maps.googleapis.com/maps/api/js?key={PUT YOUR API KEY HERE}&callback=initMap" loading=async defer></script>
+{% endblock %}
+
+{% block content %}
+
+<div id="map"></div>
+<p id="eta"><b>Estimated Time : </b></p>
+
+<script>
+	let map;
+	const locations = {{ coords | tojson | safe }};
+
+	function initMap(){
+		const directionsService = new google.maps.DirectionsService
+		const map = new google.maps.Map(document.getElementById("map"), {
+			center: {lat: 41.8781, lng: -87.6298},
+			zoom: 12,
+		});
+
+		const forwardRenderer = new google.maps.DirectionsRenderer({
+			map: map,
+			polylineOptions: {
+				strokeColor: "#0000FF",
+				strokeWeight: 4
+			}
+		});
+
+		const returnRenderer = new google.maps.DirectionsRenderer({
+			map: map,
+			polylineOptions: {
+				strokeColor: "#FF0000",
+				strokeWeight: 4
+			}
+		});
+
+		locations.forEach(function(location){
+			new google.maps.Marker({
+				position: location,
+				map: map,
+				title: "Location"
+			});
+		});
+
+		const forwardRequest = {
+			origin: locations[0],
+			destination: locations[locations.length - 1],
+			waypoints: locations.slice(1, -1).map(loc => ({ location: loc, stopover: true })),
+			optimizeWaypoints: true,
+			travelMode: 'DRIVING'
+		};
+
+		directionsService.route(forwardRequest, (result, status) => {
+			if (status === "OK") {
+				forwardRenderer.setDirections(result);
+
+				let totalDuration = 0;
+				result.routes[0].legs.forEach(leg => {
+					totalDuration += leg.duration.value // value is in seconds
+				});
+
+				// Convert to readible format
+				const minutes = Math.round(totalDuration / 60);
+				const hours = Math.floor(minutes / 60);
+				const remainingMinutes = minutes % 60;
+				const durationText = hours > 0 ? `${hours} hr ${remainingMinutes} min` : `${remainingMinutes} min`;
+
+				// Access ETA
+				document.getElementById("eta").innerHTML = "<b>Estimated Time : " + durationText;
+
+				// ========== Animate the route ==========
+                const path = result.routes[0].overview_path;
+                let index = 0;
+                const carMarker = new google.maps.Marker({
+                    map: map,
+                    icon: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+                    position: path[0],
+                });
+
+                function animateRoute() {
+                    if (index < path.length) {
+                        carMarker.setPosition(path[index]);
+                        index++;
+                        setTimeout(animateRoute, 100);
+                    }
+                }
+                animateRoute();
+
+			} else {
+				alert("Could not get directions: " + status);
+			}
+		});
+
+        const returnRequest = {
+            origin: locations[locations.length - 1],
+			destination: locations[0],
+			optimizeWaypoints: true,
+            travelMode: 'DRIVING'
+		};
+
+        directionsService.route(returnRequest, (result, status) => {
+            if (status === "OK") {
+				returnRenderer.setDirections(result);
+            } else {
+                alert("Could not get directions: " + status);
+            }
+		});
+	}
+</script>
+{% endblock %}
